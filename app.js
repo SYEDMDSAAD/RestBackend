@@ -1,44 +1,31 @@
-import express from 'express';
-import cors from "cors";
+import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
+import { errorMiddleware } from "./error/error.js";
+import reservationRouter from "./routes/reservationRoute.js";
 import { dbConnection } from "./database/dbConnection.js";
-import { errorMiddleware } from './error/error.js';
-import reservationRouter from './routes/reservationRoute.js';
 
 const app = express();
 dotenv.config({ path: "./config/config.env" });
 
-// Middleware
+app.use(
+  cors({
+    origin: [process.env.FRONTEND_URL],
+    methods: ["POST"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// CORS Configuration
-const corsOptions = {
-  origin: ['https://rest-frontend-b3wu.vercel.app'], // List allowed origins
-  credentials: true, // Enable credentials
-  optionSuccessStatus: 200,
-};
-app.use(cors(corsOptions));
+app.use("/api/v1/reservation", reservationRouter);
+app.get("/", (req, res, next)=>{return res.status(200).json({
+  success: true,
+  message: "HELLO WORLD AGAIN"
+})})
 
-app.use((req, res, next) => {
-  req.setTimeout(120000); // 120 seconds
-  next();
-});
-
-// Routes
-app.use('/api/v1/reservation', reservationRouter);
-
-// Set Referrer Policy
-app.use((req, res, next) => {
-  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-  next();
-});
-
-// Database Connection
 dbConnection();
 
-// Error Handling Middleware
 app.use(errorMiddleware);
 
 export default app;
-
