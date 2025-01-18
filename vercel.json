@@ -14,7 +14,7 @@
     ],
     "functions": {
     "api/v1/reservation": {
-      "maxDuration": 60
+      "maxDuration": 10
     }
   }
 
