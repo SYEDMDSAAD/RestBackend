@@ -20,6 +20,10 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
+app.use((req, res, next) => {
+  req.setTimeout(60000); // 60 seconds
+  next();
+});
 
 // Routes
 app.use('/api/v1/reservation', reservationRouter);
