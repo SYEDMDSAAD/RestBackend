@@ -21,7 +21,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use((req, res, next) => {
-  req.setTimeout(120000); // 60 seconds
+  req.setTimeout(120000); 
   next();
 });
 
