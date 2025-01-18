@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
-  req.setTimeout(120000); // 120 seconds
+  req.setTimeout(180000); // 120 seconds
   next();
 });
 
