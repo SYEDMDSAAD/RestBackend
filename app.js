@@ -5,18 +5,33 @@ import { dbConnection } from "./database/dbConnection.js";
 import { errorMiddleware } from './error/error.js';
 import reservationRouter from './routes/reservationRoute.js';
 
+const cors = require('cors');
+
 const app = express();
 dotenv.config({ path: "./config/config.env" });
 
 // Middleware
 app.use(cors({
-    origin: [process.env.FRONTEND_URL],
+    origin: ["*"],
     methods: ["POST"],
     credentials:true,
 }));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use('/api/v1/reservation', reservationRouter);
+
+const corsOptions = {
+    origin: '*',
+    credentials: true,            //access-control-allow-credentials:true
+    optionSuccessStatus: 200,
+  }
+  app.use(cors(corsOptions));
+  
+  // parse requests of content-type - application/json
+app.use(express.json());
+
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
 
 dbConnection();
 
