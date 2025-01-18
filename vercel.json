@@ -1,21 +1,14 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "server.js",
-        "use": "@vercel/node"
-      }
-    ],
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "server.js"
-      }
-    ],
-    "functions": {
-    "/": {
+  "version": 2,
+  "functions": {
+    "api/v1/reservation": {
       "maxDuration": 60
     }
-  }
-
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/api/v1/reservation"
+    }
+  ]
 }
