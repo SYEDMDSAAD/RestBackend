@@ -14,7 +14,7 @@
     ],
     "functions": {
     "/": {
-      "maxDuration": 10
+      "maxDuration": 60
     }
   }
 
