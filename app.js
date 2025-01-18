@@ -14,11 +14,12 @@ app.use(express.urlencoded({ extended: true }));
 
 // CORS Configuration
 const corsOptions = {
-  origin: process.env.CLIENT_URL || '*', // Allow specific origin for production
-  credentials: true,                   // Allow credentials
+  origin: ['https://rest-frontend-b3wu.vercel.app'], // List allowed origins
+  credentials: true, // Enable credentials
   optionSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
+
 
 // Routes
 app.use('/api/v1/reservation', reservationRouter);
