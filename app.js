@@ -1,59 +1,31 @@
-import express from 'express';
-import cors from "cors";
+import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
+import { errorMiddleware } from "./middlewares/error.js";
+import reservationRouter from "./routes/reservationRoute.js";
 import { dbConnection } from "./database/dbConnection.js";
-import { errorMiddleware } from './error/error.js';
-import reservationRouter from './routes/reservationRoute.js';
 
 const app = express();
-dotenv.config({ path: "./config/config.env" });
+dotenv.config({ path: "./config.env" });
 
-// Middleware
-app.use(express.json({ limit: '10mb' })); // Set payload size limit
+app.use(
+  cors({
+    origin: [process.env.FRONTEND_URL],
+    methods: ["POST"],
+    credentials: true,
+  })
+);
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// CORS Configuration
-const corsOptions = {
-  origin: ['https://rest-frontend-b3wu.vercel.app'], // List allowed origins
-  credentials: true, // Enable credentials
-  optionsSuccessStatus: 200,
-};
-app.use(cors(corsOptions));
+app.use("/api/v1/reservation", reservationRouter);
+app.get("/", (req, res, next)=>{return res.status(200).json({
+  success: true,
+  message: "HELLO WORLD AGAIN"
+})})
 
-// Increase Request Timeout
-app.use((req, res, next) => {
-  req.setTimeout(120000); // 120 seconds
-  next();
-});
+dbConnection();
 
-// Health Check Route
-app.get('/api/health', async (req, res) => {
-  try {
-    // Replace with a valid database check
-    await dbConnection(); // Test database connection
-    res.status(200).json({ status: 'healthy', message: 'Server is running fine.' });
-  } catch (error) {
-    console.error('Health check failed:', error);
-    res.status(500).json({ status: 'unhealthy', error: error.message });
-  }
-});
-
-// Routes
-app.use('/api/v1/reservation', reservationRouter);
-
-// Set Referrer Policy
-app.use((req, res, next) => {
-  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-  next();
-});
-
-// Database Connection
-dbConnection().catch(error => {
-  console.error('Database connection failed:', error);
-  process.exit(1); // Exit process if DB connection fails
-});
-
-// Error Handling Middleware
 app.use(errorMiddleware);
 
 export default app;
