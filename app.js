@@ -8,15 +8,17 @@ import reservationRouter from './routes/reservationRoute.js';
 const app = express();
 dotenv.config({ path: "./config/config.env" });
 
-app.use(
-  cors({
-    origin: [process.env.FRONTEND_URL],
-    methods: ["POST"],
-    credentials: true,
-  })
-);
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// CORS Configuration
+const corsOptions = {
+  origin: ['https://rest-frontend-b3wu.vercel.app'], // List allowed origins
+  credentials: true, // Enable credentials
+  optionSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 
 app.use((req, res, next) => {
   req.setTimeout(120000); // 120 seconds
@@ -25,10 +27,6 @@ app.use((req, res, next) => {
 
 // Routes
 app.use('/api/v1/reservation', reservationRouter);
-app.get("/", (req, res, next)=>{return res.status(200).json({
-  success: true,
-  message: "HELLO WORLD AGAIN"
-})})
 
 // Set Referrer Policy
 app.use((req, res, next) => {
@@ -43,10 +41,4 @@ dbConnection();
 app.use(errorMiddleware);
 
 export default app;
-
-
-
-
-
-
 
