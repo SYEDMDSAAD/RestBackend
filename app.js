@@ -10,11 +10,7 @@ const app = express();
 dotenv.config({ path: "./config/config.env" });
 
 // Middleware
-app.use(cors({
-    origin: ["*"],
-    methods: ["POST"],
-    credentials:true,
-}));
+
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use('/api/v1/reservation', reservationRouter);
