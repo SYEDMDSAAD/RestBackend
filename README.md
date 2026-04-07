@@ -40,7 +40,7 @@ A full-stack food reservation system built using modern web technologies, enabli
 
 ```bash
 git clone https://github.com/SYEDMDSAAD/RestBackend.git
-cd food-reservation-system
+cd RestBackend
 ```
 ## 🔧 Backend Setup
 
