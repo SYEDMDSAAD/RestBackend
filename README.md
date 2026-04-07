@@ -32,7 +32,7 @@ A full-stack food reservation system built using modern web technologies, enabli
 
 ## 📸 Screenshots
 
-![Food App UI](./public/food.png)
+![Food App UI](./rest.png)
 
 ---
 
