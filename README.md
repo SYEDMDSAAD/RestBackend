@@ -32,7 +32,7 @@ A full-stack food reservation system built using modern web technologies, enabli
 
 ## 📸 Screenshots
 
-![Food App UI](./frontend/public/food.png)
+![Food App UI](./public/food.png)
 
 ---
 
@@ -57,7 +57,7 @@ Frontend Link: https://github.com/SYEDMDSAAD/RestFrontend
 ---
 
 ## 🌐 Live Demo
-https://chat-s-io.onrender.com/
+https://rest-frontend-b3wu.vercel.app/
 
 ---
 
